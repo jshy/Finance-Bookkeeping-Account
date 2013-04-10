@@ -1,0 +1,6 @@
+/Finance-Bookkeeping-Account-*
+/.build
+/_build*
+/Build
+MYMETA.*
+!META.json
