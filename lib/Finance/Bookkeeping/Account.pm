@@ -83,7 +83,7 @@ Finance::Bookkeeping::Account is a parameterized role to create accounts that de
 
 =head2 API
 
-=over4
+=over
 
 =item debit
 
