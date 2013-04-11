@@ -1,5 +1,5 @@
 {
-   "abstract" : "Blah blah blah",
+   "abstract" : "debit/credit account balances correctly",
    "author" : [
       "Jesse Shy <jshy@cpan.org>"
    ],
@@ -46,6 +46,20 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.01"
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/jshy/Finance-Bookkeeping-Account/issues"
+      },
+      "homepage" : "https://github.com/jshy/Finance-Bookkeeping-Account",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/jshy/Finance-Bookkeeping-Account.git",
+         "web" : "https://github.com/jshy/Finance-Bookkeeping-Account"
+      }
+   },
+   "version" : "0.01",
+   "x_contributors" : [
+      "jshy <finn.cool@yahoo.com>"
+   ]
 }
 
