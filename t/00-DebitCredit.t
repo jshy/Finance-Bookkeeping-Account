@@ -12,25 +12,23 @@ use strict;
 use warnings;
 use lib './lib';
 
-use Test::More;                      # last test to print
-
+use Test::More tests => 4;                      # last test to print
 
 my $cr = CreditAccount->new;
 $cr->credit(50);
-print $cr->balance . "\n";
-$cr->debit(21.4);
-print $cr->balance . "\n";
+
+is($cr->balance, 50, 'CreditAccount credited');
+
+$cr->debit(20);
+is($cr->balance,  30, 'CreditAccount debited');
 
 
 my $dr = DebitAccount->new;
 $dr->debit(10);
-$dr->credit(5);
 
-print $dr->balance . "\n";
+is($dr->balance, 10, 'DebitAccount debited');
 
 $dr->credit(50);
-print $dr->balance . "\n";
-
-
+is($dr->balance, -40, 'DebitAccount credited');
 
 done_testing();

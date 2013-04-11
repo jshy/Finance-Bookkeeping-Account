@@ -16,16 +16,13 @@ use strict;
 use warnings;
 use lib './lib';
 
-use Test::More;                      # last test to print
+use Test::More tests => 1;                      # last test to print
 
 my $dr = AssetAccount->new;
 $dr->deposit(10);
 $dr->withdraw(5);
 
-print $dr->balance . "\n";
-
-$dr->withdraw(50);
-print $dr->balance . "\n";
+is($dr->balance, 5, 'Aliases deposit/withdraw');
 
 
 
