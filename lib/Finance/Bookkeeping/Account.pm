@@ -4,39 +4,41 @@ use strict;
 use 5.008_005;
 our $VERSION = '0.01';
 
-use MooseX::Role:Parameterized;
+use MooseX::Role::Parameterized;
 
-parameter nb, isa => 'Str', required => 1;
+parameter 'nb', isa => 'Str', required => 1;
+
 
 role {
-	my $self = shift;
+	my $p = shift;
 
-	if ($self->nb eq 'credit') {   # nb is 'normal balance'
+	has 'balance', is => 'rw', default => 0;
+
+	if ($p->nb eq 'credit') {   # nb is 'normal balance'
 		
-		method debit => sub debit { 
+		method debit => sub { 
 			my ($self, $amount) = @_;
 			$self->balance($self->balance - $amount); 
 		};
 
-		method credit => sub credit {
+		method credit => sub {
 			my ($self, $amount) = @_;
 			$self->balance($self->balance + $amount); 
 		};
 	}
 
-	if ($self->nb eq 'debit') {
-		method debit => sub debit { 
+	if ($p->nb eq 'debit') {
+		method debit => sub { 
 			my ($self, $amount) = @_;
 			$self->balance($self->balance + $amount); 
 		};
 
-		method credit => sub credit {
+		method credit => sub {
 			my ($self, $amount) = @_;
 			$self->balance($self->balance - $amount); 
 		};
 	}
-
-}
+};
 
 1;
 __END__
