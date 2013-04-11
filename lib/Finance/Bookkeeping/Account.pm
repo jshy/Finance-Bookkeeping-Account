@@ -8,54 +8,92 @@ use MooseX::Role::Parameterized;
 
 parameter 'nb', isa => 'Str', required => 1;
 
-
 role {
 	my $p = shift;
 
-	has 'balance', is => 'rw', default => 0;
+	has 'balance', is => 'ro', writer => '_set_balance', default => 0;
 
-	if ($p->nb eq 'credit') {   # nb is 'normal balance'
-		
-		method debit => sub { 
-			my ($self, $amount) = @_;
-			$self->balance($self->balance - $amount); 
-		};
 
-		method credit => sub {
-			my ($self, $amount) = @_;
-			$self->balance($self->balance + $amount); 
-		};
-	}
+	method 'credit' => sub {
+		my ($self, $amount) = @_;
+		return $p->nb eq 'credit' ? $self->_set_balance($self->balance + $amount) : $self->_set_balance($self->balance - $amount); 
+	};
 
-	if ($p->nb eq 'debit') {
-		method debit => sub { 
-			my ($self, $amount) = @_;
-			$self->balance($self->balance + $amount); 
-		};
-
-		method credit => sub {
-			my ($self, $amount) = @_;
-			$self->balance($self->balance - $amount); 
-		};
-	}
+	method 'debit' => sub {
+		my ($self, $amount) = @_;
+		return $p->nb eq 'debit' ? $self->_set_balance($self->balance + $amount) : $self->_set_balance($self->balance - $amount); 
+	};
 };
 
 1;
+
 __END__
 
 =encoding utf-8
 
 =head1 NAME
 
-Finance::Bookkeeping::Account - Blah blah blah
+Finance::Bookkeeping::Account - debit/credit account balances correctly
 
 =head1 SYNOPSIS
 
-  use Finance::Bookkeeping::Account;
+	package MyCreditAccount;
+	use Moose;
+	with 'Finance::Bookkeeping::Account' => { nb => 'credit'}; # consuming class declars it's normal balance (nb) is credit or debit
+
+	package MyDebitAccount;
+	use Moose;
+	with 'Finance::Bookkeeping::Account' => { nb => 'debit'}; # consuming class declars it's normal balance (nb) is credit or debit
+
+	package MyCheckbook;
+	use Moose;
+	with ('Finance::Bookkeeping::Account' => {
+	  nb => 'debit',
+		-alias => {
+			 debit => 'deposit',
+			 credit => 'withdraw'
+			 },
+		-excludes => ['debit', 'credit'],
+		}
+	);
+
+	package main;
+
+	my $cr = CreditAccount->new;
+	$cr->credit(50);
+	$cr->debit(20);
+	say $cr->balance; # 30
+
+
+	my $dr = DebitAccount->new;
+	$dr->debit(10);
+	$dr->credit(5);
+	$dr->credit(50);
+	say $dr->balance; # -45
+
+	my $bankaccount = MyCheckbook->new;
+	$bankaccount->deposit(10);
+	$bankaccount->withdraw(5);
+	say $bankaccount->balance; # 5
+	
 
 =head1 DESCRIPTION
 
-Finance::Bookkeeping::Account is
+Finance::Bookkeeping::Account is a parameterized role to create accounts that debit and credit correctly depending on account type.
+
+=head2 API
+
+=over4
+
+=item debit
+
+nb = debit, this increases the balance. nb = credit, this decreases the balance.
+
+=item credit
+
+nb = credit, this increases the balance. nb = debit, this decreases the balance.
+
+=back
 
 =head1 AUTHOR
 
