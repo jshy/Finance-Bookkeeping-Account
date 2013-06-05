@@ -16,7 +16,6 @@ use Test::More tests => 4;                      # last test to print
 
 my $cr = CreditAccount->new;
 $cr->credit(50);
-
 is($cr->balance, 50, 'CreditAccount credited');
 
 $cr->debit(20);

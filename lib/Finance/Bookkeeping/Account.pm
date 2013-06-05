@@ -5,6 +5,7 @@ use 5.008_005;
 our $VERSION = '0.01';
 
 use MooseX::Role::Parameterized;
+use Scalar::Util qw(looks_like_number);
 
 parameter 'nb', isa => 'Str', required => 1;
 
@@ -13,14 +14,22 @@ role {
 
 	has 'balance', is => 'ro', writer => '_set_balance', default => 0;
 
+	sub validate_amount {
+		my $amount = shift;	
+		die "$amount does not look like a number" unless looks_like_number($amount);
+		die "Only use non negative numbers. Input $amount not a non negative number." unless ($amount == abs($amount));
+		return;
+	}
 
 	method 'credit' => sub {
 		my ($self, $amount) = @_;
+		validate_amount( $amount );
 		return $p->nb eq 'credit' ? $self->_set_balance($self->balance + $amount) : $self->_set_balance($self->balance - $amount); 
 	};
 
 	method 'debit' => sub {
 		my ($self, $amount) = @_;
+		validate_amount( $amount );
 		return $p->nb eq 'debit' ? $self->_set_balance($self->balance + $amount) : $self->_set_balance($self->balance - $amount); 
 	};
 };
@@ -59,13 +68,13 @@ Finance::Bookkeeping::Account - debit/credit account balances correctly
 
 	package main;
 
-	my $cr = CreditAccount->new;
+	my $cr = MyCreditAccount->new;
 	$cr->credit(50);
 	$cr->debit(20);
 	say $cr->balance; # 30
 
 
-	my $dr = DebitAccount->new;
+	my $dr = MyDebitAccount->new;
 	$dr->debit(10);
 	$dr->credit(5);
 	$dr->credit(50);
@@ -79,7 +88,7 @@ Finance::Bookkeeping::Account - debit/credit account balances correctly
 
 =head1 DESCRIPTION
 
-Finance::Bookkeeping::Account is a parameterized role to create accounts that debit and credit correctly depending on account type.
+Finance::Bookkeeping::Account is a parameterized role to create accounts that debit and credit correctly depending on account type. Input can only be positive numbers or you will get an error message stating the input either does not look like a number or is not a positive number.
 
 =head2 API
 

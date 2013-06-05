@@ -36,6 +36,8 @@
       },
       "runtime" : {
          "requires" : {
+            "MooseX::Role::Parameterized" : "1.00",
+						"Scalar::Util" : '1.23',
             "perl" : "5.008005"
          }
       },
@@ -58,5 +60,8 @@
       }
    },
    "version" : "0.01",
+   "x_contributors" : [
+      "jshy <finn.cool@yahoo.com>"
+   ]
 }
 
