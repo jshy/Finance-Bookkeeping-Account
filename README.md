@@ -26,14 +26,14 @@ Finance::Bookkeeping::Account - debit/credit account balances correctly
 
 	package main;
 
-	my $cr = CreditAccount->new;
+	my $cr = MyCreditAccount->new;
 	$cr->credit(50);
 	$cr->debit(20);
 	say $cr->balance; # 30
 
 
 
-	my $dr = DebitAccount->new;
+	my $dr = MyDebitAccount->new;
 	$dr->debit(10);
 	$dr->credit(5);
 	$dr->credit(50);
@@ -49,7 +49,7 @@ Finance::Bookkeeping::Account - debit/credit account balances correctly
 
 # DESCRIPTION
 
-Finance::Bookkeeping::Account is a parameterized role to create accounts that debit and credit correctly depending on account type.
+Finance::Bookkeeping::Account is a parameterized role to create accounts that debit and credit correctly depending on account type. Input can only be positive numbers or you will get an error message stating the input either does not look like a number or is not a positive number.
 
 ## API
 

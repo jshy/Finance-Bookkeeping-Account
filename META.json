@@ -4,7 +4,7 @@
       "Jesse Shy <jshy@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v1.0.0, Dist::Zilla version 4.300033, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Dist::Milla version v1.0.2, Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -26,7 +26,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build::Tiny" : "0.014"
+            "Module::Build::Tiny" : "0.018"
          }
       },
       "develop" : {
@@ -37,8 +37,8 @@
       "runtime" : {
          "requires" : {
             "MooseX::Role::Parameterized" : "1.00",
-						"Scalar::Util" : "1.23",
-            "perl" : "5.008005"
+            "perl" : "5.008005",
+						"Scalar::Util" : "0",
          }
       },
       "test" : {
@@ -59,7 +59,7 @@
          "web" : "https://github.com/jshy/Finance-Bookkeeping-Account"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_contributors" : [
       "jshy <finn.cool@yahoo.com>"
    ]
