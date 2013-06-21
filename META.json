@@ -37,8 +37,8 @@
       "runtime" : {
          "requires" : {
             "MooseX::Role::Parameterized" : "1.00",
-            "perl" : "5.008005",
-						"Scalar::Util" : "0",
+            "Scalar::Util" : "0",
+            "perl" : "5.008005"
          }
       },
       "test" : {
@@ -59,7 +59,7 @@
          "web" : "https://github.com/jshy/Finance-Bookkeeping-Account"
       }
    },
-   "version" : "0.02",
+   "version" : "0.03",
    "x_contributors" : [
       "jshy <finn.cool@yahoo.com>"
    ]
